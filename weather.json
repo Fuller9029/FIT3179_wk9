@@ -1,0 +1,42 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 600,
+    "height": 400,
+    "data": {
+    "url": "path/to/your/weatherdata.csv",
+    "format": {"type": "csv"}
+    },
+    "transform": [
+    {"filter": "datum.RainToday == 'Yes'"}
+    ],
+    "projection": {
+    "type": "mercator"
+    },
+    "layer": [
+    {
+        "mark": "geoshape",
+        "data": {
+        "url": "https://vega.github.io/vega-datasets/data/world-110m.json",
+        "format": {"type": "topojson", "feature": "countries"}
+        },
+        "encoding": {
+        "color": {"value": "lightgray"}
+        }
+    },
+    {
+        "mark": "circle",
+        "encoding": {
+        "longitude": {"field": "Longitude", "type": "quantitative"},
+        "latitude": {"field": "Latitude", "type": "quantitative"},
+        "size": {"field": "MaxTemp", "type": "quantitative"},
+        "color": {"field": "Rainfall", "type": "quantitative"},
+        "tooltip": [
+            {"field": "Location", "type": "nominal"},
+            {"field": "MinTemp", "type": "quantitative"},
+            {"field": "MaxTemp", "type": "quantitative"},
+            {"field": "Rainfall", "type": "quantitative"}
+        ]
+        }
+    }
+    ]
+}
